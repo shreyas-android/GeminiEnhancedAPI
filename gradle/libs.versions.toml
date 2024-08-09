@@ -1,0 +1,88 @@
+[versions]
+
+
+composeCompiler = "1.4.7"
+composeVersion = "1.4.0"
+composeFoundation = "1.4.0"
+composeMaterial = "1.4.0"
+composeMaterial3 = "1.0.1"
+composeConstraintLayout = "1.0.1"
+composeActivity = "1.8.0"
+composeNavigation = "2.8.0-beta06"
+
+kotlin = "1.8.10"
+kotlinCoroutines = "1.6.4"
+lifeCycleExtension = "2.2.0"
+
+agp = "8.1.1"
+kotlin1810 = "1.8.10"
+core-ktx = "1.9.0"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+appcompat = "1.5.0"
+com-google-android-material-material = "1.9.0"
+org-jetbrains-kotlin-jvm = "1.8.0"
+kotlinAtomicfu = "0.23.1"
+atomicfuVersion = "0.17.3"
+ktor = "2.2.4"
+
+
+
+
+[libraries]
+compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "composeActivity" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "composeMaterial3" }
+compose-material = { group = "androidx.compose.material", name = "material", version.ref = "composeMaterial" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "composeFoundation" }
+compose-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "composeConstraintLayout" }
+compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
+
+activity = { group = "androidx.activity", name = "activity-ktx", version = "1.3.1" }
+kotlinCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.kotlinCoroutines}"
+
+lifeCycleProcess = "androidx.lifecycle:lifecycle-process:${versions.lifeCycleProcess}"
+lifeCycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifeCycleRuntime}"
+
+lifecycle_extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version.ref = "lifeCycleExtension" }
+
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+com-google-android-material-material = { group = "com.google.android.material", name = "material", version.ref = "com-google-android-material-material" }
+
+atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version.ref = "atomicfuVersion" }
+
+
+
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+
+kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
+
+#KTOR
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor" }
+
+[plugins]
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin1810" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin_atomicfu = { id = "org.jetbrains.kotlinx.atomicfu-gradle-plugin", version.ref = "kotlinAtomicfu" }
+
+
+[bundles]
+ktor-common = ["ktor-client-core", "ktor-client-logging", "ktor-serialization-kotlinx-json", "ktor-client-content-negotiation"]
+ktor-android = ["ktor-client-android", "ktor-client-okhttp"]
+ktor-ios = ["ktor-client-ios"]
+
+
