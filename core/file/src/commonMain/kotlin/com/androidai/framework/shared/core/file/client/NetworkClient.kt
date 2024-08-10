@@ -1,7 +1,7 @@
 package com.androidai.framework.shared.core.file.client
 
 
-import com.cogniheroid.framework.shared.core.geminifile.utils.FrameworkLogger
+import com.androidai.framework.shared.core.file.utils.FrameworkLogger
 import io.ktor.client.HttpClient
 import io.ktor.client.network.sockets.ConnectTimeoutException
 import io.ktor.client.network.sockets.SocketTimeoutException

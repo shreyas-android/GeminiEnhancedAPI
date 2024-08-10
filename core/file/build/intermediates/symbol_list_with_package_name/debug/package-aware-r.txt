@@ -1,1 +1,1 @@
-com.cogniheroid.framework.shared.core.geminifile
+com.androidai.framework.shared.core.file

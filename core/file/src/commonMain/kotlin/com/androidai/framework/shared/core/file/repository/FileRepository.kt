@@ -1,11 +1,12 @@
 package com.androidai.framework.shared.core.file.repository
 
-import com.cogniheroid.framework.shared.core.geminifile.data.request.GeminiFileUploadRequest
-import com.cogniheroid.framework.shared.core.geminifile.data.response.file.GeminiFileListResponse
-import com.cogniheroid.framework.shared.core.geminifile.data.response.file.GeminiFileResponse
-import com.cogniheroid.framework.shared.core.geminifile.data.response.RemoteResponse
-import com.cogniheroid.framework.shared.core.geminifile.data.response.file.GeminiFileUploadResponse
- interface FileRepository {
+import com.androidai.framework.shared.core.file.data.request.GeminiFileUploadRequest
+import com.androidai.framework.shared.core.file.data.response.RemoteResponse
+import com.androidai.framework.shared.core.file.data.response.file.GeminiFileListResponse
+import com.androidai.framework.shared.core.file.data.response.file.GeminiFileResponse
+import com.androidai.framework.shared.core.file.data.response.file.GeminiFileUploadResponse
+
+interface FileRepository {
 
     companion object {
         fun getInstance(): FileRepository {
@@ -15,7 +16,7 @@ import com.cogniheroid.framework.shared.core.geminifile.data.response.file.Gemin
 
     suspend fun uploadAttachment(
             geminiFileUploadRequest : GeminiFileUploadRequest,
-            onFileUploadListener : com.androidai.framework.shared.core.file.callback.OnFileUploadListener?) : RemoteResponse<GeminiFileUploadResponse>
+            fileUploadCallback : com.androidai.framework.shared.core.file.callback.FileUploadCallback?) : RemoteResponse<GeminiFileUploadResponse>
 
      suspend fun getFiles(pageSize:Int = 100, pageToken:String = "") : RemoteResponse<GeminiFileListResponse>
 

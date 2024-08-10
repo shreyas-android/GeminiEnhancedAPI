@@ -1,12 +1,12 @@
 package com.androidai.framework.shared.core.file.repository
 
-import com.cogniheroid.framework.shared.core.geminifile.data.request.GeminiFileUploadRequest
-import com.cogniheroid.framework.shared.core.geminifile.utils.remoteSafeCall
-import com.cogniheroid.framework.shared.core.geminifile.remote.remoteservice.FileRemoteService
-import com.cogniheroid.framework.shared.core.geminifile.data.response.file.GeminiFileListResponse
-import com.cogniheroid.framework.shared.core.geminifile.data.response.file.GeminiFileResponse
-import com.cogniheroid.framework.shared.core.geminifile.data.response.RemoteResponse
-import com.cogniheroid.framework.shared.core.geminifile.data.response.file.GeminiFileUploadResponse
+import com.androidai.framework.shared.core.file.data.response.RemoteResponse
+import com.androidai.framework.shared.core.file.data.request.GeminiFileUploadRequest
+import com.androidai.framework.shared.core.file.utils.remoteSafeCall
+import com.androidai.framework.shared.core.file.remote.remoteservice.FileRemoteService
+import com.androidai.framework.shared.core.file.data.response.file.GeminiFileListResponse
+import com.androidai.framework.shared.core.file.data.response.file.GeminiFileResponse
+import com.androidai.framework.shared.core.file.data.response.file.GeminiFileUploadResponse
 import io.ktor.client.call.body
 import io.ktor.client.statement.bodyAsText
 
@@ -15,10 +15,10 @@ internal class FileRepositoryImpl(
 
     override suspend fun uploadAttachment(
             geminiFileUploadRequest : GeminiFileUploadRequest,
-            onFileUploadListener : com.androidai.framework.shared.core.file.callback.OnFileUploadListener?) : RemoteResponse<GeminiFileUploadResponse> {
+            fileUploadCallback : com.androidai.framework.shared.core.file.callback.FileUploadCallback?) : RemoteResponse<GeminiFileUploadResponse> {
         return remoteSafeCall(action = {
             fileRemoteService.
-            uploadAttachment(geminiFileUploadRequest, onFileUploadListener)
+            uploadAttachment(geminiFileUploadRequest, fileUploadCallback)
         }, onSuccess = {
             it.body() }, onLogFailure = {})
     }

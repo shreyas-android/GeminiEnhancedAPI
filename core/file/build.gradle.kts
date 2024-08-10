@@ -29,6 +29,22 @@ version = "1.0.0-alpha01"
     }
 }*/
 
+
+/*afterEvaluate {
+    publishing {
+        repositories {
+            maven {
+                url = uri("https://maven.pkg.github.com/shreyas-android/GeminiAPI")
+                credentials(PasswordCredentials::class)
+                authentication {
+                    create<BasicAuthentication>("basic")
+                }
+            }
+        }
+    }
+}*/
+
+
 kotlin {
 
     android {
@@ -37,20 +53,20 @@ kotlin {
                 jvmTarget = "1.8"
             }
         }
-        publishLibraryVariants("release", "debug")
+        publishLibraryVariants("release")
         /**/
     }
 
     listOf(
         iosX64(), iosArm64(), iosSimulatorArm64()).forEach {
         it.binaries.framework {
-            baseName = "chat"
+            baseName = "file"
         }
     }
 
     sourceSets {
         val commonMain by getting {
-            dependencies { //put your multiplatform dependencies here
+            dependencies {
                 implementation(libs.atomicfu)
                 implementation(libs.kotlin.coroutines.core)
                 implementation(libs.bundles.ktor.common)
@@ -58,12 +74,12 @@ kotlin {
 
         }
         val commonTest by getting {
-            dependencies { // implementation(libs.kotlin.test) }
+            dependencies {
             }
         }
 
         val androidMain by getting {
-            dependencies { // implementation(libs.sqlDelight.android.driver)
+            dependencies {
                 implementation(libs.bundles.ktor.android)
             }
         }

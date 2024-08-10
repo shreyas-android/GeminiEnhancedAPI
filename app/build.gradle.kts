@@ -7,6 +7,10 @@ android {
     namespace = "com.androidai.module.geminiapi"
     compileSdk = 34
 
+    val keystoreFile = project.rootProject.file("cred.properties")
+    val properties = org.jetbrains.kotlin.konan.properties.Properties()
+    properties.load(keystoreFile.inputStream())
+
     defaultConfig {
         applicationId = "com.androidai.module.geminiapi"
         minSdk = 24
@@ -18,6 +22,11 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // Set API keys in BuildConfig
+        buildConfigField(
+            "String", "android_ai_gemini_api_key",
+            properties.getProperty("GEMINI_API_KEY"))
     }
 
     buildTypes {
@@ -36,9 +45,10 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.4.4"
     }
     packaging {
         resources {
@@ -56,4 +66,12 @@ dependencies {
     implementation(libs.compose.material)
     implementation(libs.compose.material3)
     testImplementation(libs.junit)
+    implementation(libs.compose.viewmodel)
+
+    implementation(libs.compose.constraintlayout)
+    implementation(libs.activity)
+    implementation(libs.lifecycle.extensions) // implementation(libs.lifeCycleExtension)
+    implementation(libs.lifeCycleRuntime)
+    implementation(libs.lifeCycleProcess)
+    implementation(project(":core:model"))
 }

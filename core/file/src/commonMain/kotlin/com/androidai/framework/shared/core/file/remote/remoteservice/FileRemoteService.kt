@@ -1,9 +1,9 @@
 package com.androidai.framework.shared.core.file.remote.remoteservice
 
-import com.cogniheroid.framework.shared.core.geminifile.data.request.GeminiFileUploadRequest
-import com.cogniheroid.framework.shared.core.geminifile.repository.RemoteConstants
-import com.cogniheroid.framework.shared.core.geminifile.utils.appendConfiguration
-import com.cogniheroid.framework.shared.core.geminifile.remote.path.RemoteUrlPath
+import com.androidai.framework.shared.core.file.data.request.GeminiFileUploadRequest
+import com.androidai.framework.shared.core.file.remote.RemoteConstants
+import com.androidai.framework.shared.core.file.utils.appendConfiguration
+import com.androidai.framework.shared.core.file.remote.path.RemoteUrlPath
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.onUpload
 import io.ktor.client.request.delete
@@ -22,7 +22,7 @@ internal class FileRemoteService(
 
     suspend fun uploadAttachment(
             geminiFileUploadRequest : GeminiFileUploadRequest,
-            onFileUploadListener : com.androidai.framework.shared.core.file.callback.OnFileUploadListener??
+            fileUploadCallback : com.androidai.framework.shared.core.file.callback.FileUploadCallback?
     ): HttpResponse {
 
         return httpClient.submitFormWithBinaryData(
@@ -37,7 +37,7 @@ internal class FileRemoteService(
         ) {
             appendConfiguration(apiKey)
             onUpload { bytesSentTotal, contentLength ->
-                onFileUploadListener?.onUpload(bytesSentTotal, contentLength)
+                fileUploadCallback?.onUpload(bytesSentTotal, contentLength)
             }
         }
     }

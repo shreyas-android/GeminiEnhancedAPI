@@ -1,14 +1,15 @@
 package com.androidai.framework.shared.core.file
 
-import com.cogniheroid.framework.shared.core.geminifile.remote.path.RemoteUrlPath
-import com.cogniheroid.framework.shared.core.geminifile.remote.remoteservice.FileRemoteService
-import com.cogniheroid.framework.shared.core.geminifile.repository.FileRepositoryImpl
+import com.androidai.framework.shared.core.file.remote.path.RemoteUrlPath
+import com.androidai.framework.shared.core.file.remote.remoteservice.FileRemoteService
+import com.androidai.framework.shared.core.file.repository.FileRepositoryImpl
+
 
 object Instance {
 
    private val networkClient by lazy {
         com.androidai.framework.shared.core.file.client
-            .NetworkClient(com.androidai.framework.shared.core.file.GeminiFileCore.isDebug).getNetworkClient()
+            .NetworkClient(GeminiFileCore.isDebug).getNetworkClient()
     }
 
     private val remoteUrlPath by lazy {
@@ -17,14 +18,14 @@ object Instance {
 
     private val fileRemoteService by lazy {
         FileRemoteService(
-            com.androidai.framework.shared.core.file.Instance.remoteUrlPath,
-            com.androidai.framework.shared.core.file.GeminiFileCore.apiKey,
-            com.androidai.framework.shared.core.file.Instance.networkClient)
+            remoteUrlPath,
+            GeminiFileCore.apiKey,
+            networkClient)
     }
 
     internal val  fileRepositoryImpl by lazy {
         FileRepositoryImpl(
-            com.androidai.framework.shared.core.file.Instance.fileRemoteService)
+            fileRemoteService)
     }
 
 

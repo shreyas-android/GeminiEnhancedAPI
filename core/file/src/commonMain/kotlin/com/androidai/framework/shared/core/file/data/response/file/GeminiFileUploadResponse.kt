@@ -6,4 +6,4 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GeminiFileUploadResponse(
         @SerialName("file")
-        val attachment : GeminiFileResponse)
+        val file : GeminiFileResponse)

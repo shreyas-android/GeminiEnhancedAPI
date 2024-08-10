@@ -1,8 +1,8 @@
 package com.androidai.framework.shared.core.file.utils
 
-import com.cogniheroid.framework.shared.core.geminifile.data.response.error.GeminiFileRemoteError
-import com.cogniheroid.framework.shared.core.geminifile.data.response.RemoteResponse
-import com.cogniheroid.framework.shared.core.geminifile.client.exception.GeminiFileResponseException
+import com.androidai.framework.shared.core.file.client.exception.GeminiFileResponseException
+import com.androidai.framework.shared.core.file.data.response.RemoteResponse
+import com.androidai.framework.shared.core.file.data.response.error.GeminiFileRemoteError
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -17,9 +17,9 @@ inline fun <T> remoteSafeCall(action: () -> HttpResponse, onSuccess: (value: Htt
     }, onFailure = {
         when (it) {
             is GeminiFileResponseException -> {
-                onLogFailure(it.calendarError)
+                onLogFailure(it.geminiFileRemoteError)
                 RemoteResponse.Error(
-                    it.calendarError
+                    it.geminiFileRemoteError
                 )
             }
             else ->{

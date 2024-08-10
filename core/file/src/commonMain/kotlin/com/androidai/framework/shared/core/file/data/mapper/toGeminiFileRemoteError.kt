@@ -1,7 +1,7 @@
 package com.androidai.framework.shared.core.file.data.mapper
 
-import com.cogniheroid.framework.shared.core.geminifile.data.response.error.GeminiFileRemoteError
-import com.cogniheroid.framework.shared.core.geminifile.data.response.error.ErrorResponse
+import com.androidai.framework.shared.core.file.data.response.error.GeminiFileRemoteError
+import com.androidai.framework.shared.core.file.data.response.error.ErrorResponse
 
 internal fun ErrorResponse.toGeminiFileRemoteError(statusCode: Int, url:String, errorCode:String, response:String) =
         GeminiFileRemoteError(

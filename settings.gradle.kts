@@ -10,11 +10,20 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url =  uri("https://maven.google.com") } // For Gradle < 4.0
+        maven { url = uri("https://maven.google.com") }
+       /* maven {
+            url = uri("https://maven.pkg.github.com/shreyas-android/GeminiAPI")
+            credentials(PasswordCredentials::class)
+            authentication {
+                create<BasicAuthentication>("basic")
+            }
+
+        }*/
     }
 }
 
 rootProject.name = "GeminiAPI"
 include(":app")
 include(":core:file")
+include(":core:model")
  

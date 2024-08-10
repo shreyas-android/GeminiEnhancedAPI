@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GeminiFileListResponse(
         @SerialName("files")
-        val fileItems :List<GeminiFileResponse>,
+        val fileItems :List<GeminiFileResponse> = listOf(),
 
         @SerialName("nextPageToken")
         val nextPageToken:String? = null
