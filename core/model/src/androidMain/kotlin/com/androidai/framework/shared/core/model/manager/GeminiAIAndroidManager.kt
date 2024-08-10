@@ -30,7 +30,6 @@ internal class GeminiAIAndroidManager(
     override suspend fun generateTextStreamContent(
             modelInputList : List<ModelInput>, onFileUploadListener : OnFileUploadListener?,
             defaultErrorMessage : String) : CommonFlow<GeminiAIGenerate> {
-        Log.d("CHECKAPICALL", "chekcig the api call = $apiKey")
 
         val contentFlow : MutableStateFlow<GeminiAIGenerate> =
             MutableStateFlow(GeminiAIGenerate.Generating)
@@ -60,7 +59,9 @@ internal class GeminiAIAndroidManager(
 
         managerScope.launch {
             filesUploadFlow.collectLatest {
+                contentFlow.value = it
                 if(it is GeminiAIGenerate.AllFileUploaded) {
+
                     val input = content {
                         textInputList.forEach { content ->
                             text(content.text)
@@ -74,6 +75,8 @@ internal class GeminiAIAndroidManager(
                             fileData(response.uri, response.mimeType)
                         }
                     }
+
+                    contentFlow.value = GeminiAIGenerate.Generating
 
                     runCatching {
                         generativeModel.generateContent(input)
@@ -96,8 +99,6 @@ internal class GeminiAIAndroidManager(
                             throwable.message
                                 ?: defaultErrorMessage)
                     })
-                } else {
-                    contentFlow.value = it
                 }
 
             }
