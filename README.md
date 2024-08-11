@@ -9,7 +9,7 @@ This library extends the Gemini Android API by adding a unique feature that allo
 - Prompt-Driven Analysis: Users can provide a prompt and the file to guide the content analysis.
 
 ## Installation
-To use this library in your Android project, add the following Maven repository and dependency to your build.gradle file:
+To use this library in your Android project, add the following Maven repository and dependency to your build.gradle.kts file:
 
 ```
 repositories {
@@ -42,11 +42,11 @@ GeminiAIAndroidCore.init(isDebug, apiKey, modelName);
 
 ### Calling the generateTextStreamContent API
 
-The generateTextStreamContent method is a suspend function that generates content by processing a list of ModelInput objects. The method uses the inputs to interact with Gemini, allowing for the upload of files or other data types, and streams the content generation process.
+The **generateTextStreamContent** method is a suspend function that generates content by processing a list of ModelInput objects. The method uses the inputs to interact with Gemini, allowing for the upload of files or other data types, and streams the content generation process.
 
 ```
   GeminiAIAndroidCore.getGeminiAIManagerInstance().generateTextStreamContent(modelInputList : List<ModelInput>,
-                                          onFileUploadListener : OnFileUploadListener?,
+                                          onFileUploadListener: OnFileUploadListener?,
                                           defaultErrorMessage : String): CommonFlow<GeminiAIGenerate>
 ```
 
