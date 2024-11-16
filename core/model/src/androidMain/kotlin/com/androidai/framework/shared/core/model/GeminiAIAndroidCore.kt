@@ -1,20 +1,20 @@
 package com.androidai.framework.shared.core.model
 
-import com.androidai.framework.shared.core.model.manager.GeminiAIFileManager
+import com.androidai.framework.shared.core.model.manager.file.GeminiAIFileManagerImpl
 import com.androidai.framework.shared.core.file.repository.FileRepository
-import com.androidai.framework.shared.core.model.manager.GeminiAIAndroidManager
+import com.androidai.framework.shared.core.model.manager.GeminiAIManagerImpl
 import com.androidai.framework.shared.core.model.manager.GeminiAIManager
 import com.androidai.framework.shared.core.model.data.enums.GeminiAIModel
 
 object GeminiAIAndroidCore {
 
     private var apiKey:String = ""
-    private var modelName:String = GeminiAIModel.GEMINI_PRO.modelName
+    private var modelName:GeminiAIModel = GeminiAIModel.GEMINI_PRO
     private var isDebug:Boolean = false
 
     private var geminiAIManagerImpl: GeminiAIManager? = null
 
-    fun init(isDebug:Boolean, apiKey:String, modelName : String){
+    fun init(isDebug:Boolean, apiKey:String, modelName : GeminiAIModel){
         GeminiAIAndroidCore.apiKey = apiKey
         GeminiAIAndroidCore.modelName = modelName
         GeminiAIAndroidCore.isDebug = isDebug
@@ -31,9 +31,9 @@ object GeminiAIAndroidCore {
         return geminiAIManagerImpl!!
     }
 
-    private fun createGeminiManagerInstance(apiKey:String, modelName:String) : GeminiAIAndroidManager {
-        val geminiAIFileManager = GeminiAIFileManager(FileRepository.getInstance())
-        return GeminiAIAndroidManager(apiKey,modelName,
-            geminiAIFileManager)
+    private fun createGeminiManagerInstance(apiKey:String, modelName:GeminiAIModel) : GeminiAIManagerImpl {
+        val geminiAIFileManagerImpl = GeminiAIFileManagerImpl(FileRepository.getInstance())
+        return GeminiAIManagerImpl(apiKey,modelName,
+            geminiAIFileManagerImpl)
     }
 }

@@ -5,16 +5,38 @@ import com.androidai.framework.shared.core.model.data.model.ModelInput
 import com.androidai.framework.shared.core.file.data.response.RemoteResponse
 import com.androidai.framework.shared.core.file.data.response.file.GeminiFileListResponse
 import com.androidai.framework.shared.core.file.data.response.file.GeminiFileResponse
-import com.androidai.framework.shared.core.model.data.enums.GeminiAIGenerate
+import com.androidai.framework.shared.core.model.data.model.GeminiAIFileState
+import com.androidai.framework.shared.core.model.data.model.GeminiAIGenerate
+import com.androidai.framework.shared.core.model.data.model.GeminiAIGenerateWithFile
+import com.androidai.framework.shared.core.model.data.model.UploadFileInfo
+import kotlinx.coroutines.flow.Flow
 
 interface GeminiAIManager {
-    suspend fun generateTextStreamContent(modelInputList : List<ModelInput>,
-                                          onFileUploadListener : OnFileUploadListener?,
-                                          defaultErrorMessage : String): com.androidai.framework.shared.core.model.flow.CommonFlow<GeminiAIGenerate>
 
-    suspend fun getFiles(pageSize:Int = 100, pageToken:String = "") : RemoteResponse<GeminiFileListResponse>
+    suspend fun generateTextContent(
+            modelInputList : List<ModelInput>, defaultErrorMessage : String) : GeminiAIGenerate
 
-    suspend fun getFileByName(fileName:String): RemoteResponse<GeminiFileResponse>
+    suspend fun generateTextContentStream(
+            modelInputList : List<ModelInput>,
+            defaultErrorMessage : String) : Flow<GeminiAIGenerate>
 
-    suspend fun deleteFileByName(fileName:String): RemoteResponse<Boolean>
+    suspend fun generateTextContent(
+            modelInputList : List<ModelInput>, uploadFileInfoList : List<UploadFileInfo>,
+            onFileUploadListener : OnFileUploadListener?,
+            defaultErrorMessage : String) : Flow<GeminiAIGenerateWithFile>
+
+    suspend fun generateTextContentStream(
+            modelInputList : List<ModelInput>, uploadFileInfoList : List<UploadFileInfo>,
+            onFileUploadListener : OnFileUploadListener?,
+            defaultErrorMessage : String) : Flow<GeminiAIGenerateWithFile>
+
+    suspend fun uploadFiles(
+            uploadFileInfoList : List<UploadFileInfo>,
+            onFileUploadListener : OnFileUploadListener?) : Flow<GeminiAIFileState>
+    suspend fun getFiles(
+            pageSize : Int = 100, pageToken : String = "") : RemoteResponse<GeminiFileListResponse>
+
+    suspend fun getFileByName(fileName : String) : RemoteResponse<GeminiFileResponse>
+
+    suspend fun deleteFileByName(fileName : String) : RemoteResponse<Boolean>
 }

@@ -9,6 +9,6 @@ class GeminiDemoApplication:Application() {
     override fun onCreate() {
         super.onCreate()
         GeminiAIAndroidCore.init(BuildConfig.DEBUG,
-            BuildConfig.android_ai_gemini_api_key, GeminiAIModel.GEMINI_PRO.modelName)
+            BuildConfig.android_ai_gemini_api_key, GeminiAIModel.GEMINI_PRO)
     }
 }

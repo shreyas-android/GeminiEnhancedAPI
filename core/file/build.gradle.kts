@@ -8,41 +8,22 @@ plugins {
     id("maven-publish")
 }
 
-group = "com.androidai.framework.shared.core.file"
-version = "1.0.0-alpha01"
+group = "com.androidai.shared.gemini.enhanced.file"
+version = "1.0.0-alpha02"
 
-/*publishing {
-    afterEvaluate {
-        extensions.getByType(PublishingExtension::class.java).apply {
-            publications {
-                create("release", MavenPublication::class.java) {
-                    groupId = "com.androidai.framework.shared.core.fiile"
-                    artifactId = "gemini-file"
-                    version = "1.0.0-alpha01"
 
-                    afterEvaluate {
-                        from(components["release"])
-                    }
-                }
+publishing {
+    repositories {
+        maven {
+            url = uri("https://maven.pkg.github.com/shreyas-android/GeminiEnhancedAPI")
+            credentials {
+                /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
+                username = System.getenv("GPR_USER")
+                password = System.getenv("GPR_API_KEY")
             }
         }
     }
-}*/
-
-
-/*afterEvaluate {
-    publishing {
-        repositories {
-            maven {
-                url = uri("https://maven.pkg.github.com/shreyas-android/GeminiAPI")
-                credentials(PasswordCredentials::class)
-                authentication {
-                    create<BasicAuthentication>("basic")
-                }
-            }
-        }
-    }
-}*/
+}
 
 
 kotlin {

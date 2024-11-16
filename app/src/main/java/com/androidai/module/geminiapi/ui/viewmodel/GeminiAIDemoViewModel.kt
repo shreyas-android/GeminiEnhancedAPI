@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.androidai.framework.shared.core.model.manager.GeminiAIManager
 import com.androidai.framework.shared.core.model.data.model.ModelInput
 import com.androidai.framework.shared.core.file.data.response.RemoteResponse
+import com.androidai.framework.shared.core.model.data.model.GeminiAIGenerateWithFile
+import com.androidai.framework.shared.core.model.data.model.UploadFileInfo
 import com.cogniheroid.framework.feature.appaai.ui.generation.advancetextgeneration.uistate.GeminiAIDemoUIEffect
 import com.androidai.module.geminiapi.uistate.GeminiAIDemoUIEvent
 import com.androidai.module.geminiapi.uistate.GeminiAIDemoUIState
@@ -92,11 +94,41 @@ getFileByName()
             fileUriItems : List<FileUriInfo>, prompt : String, defaultErrorMessage : String) {
         viewModelScope.launch {
 
-            avengerAIManager.generateTextStreamContent(
-                getModelInputList(fileUriItems, prompt), null, defaultErrorMessage,
+            val uploadFileInfo = fileUriItems.map {
+                UploadFileInfo(false, it.name, it.mimeType, it.data ?: ByteArray(0))
+            }
+            var initial = 0
+            avengerAIManager.generateTextContentStream(
+                getModelInputList(prompt), uploadFileInfo, null,
+                defaultErrorMessage,
             ).collectLatest {
-
-                result.value = it.toString()
+                when(it){
+                    is GeminiAIGenerateWithFile.AllFileUploaded -> {
+                        result.value = "All file uploaded"
+                    }
+                    is GeminiAIGenerateWithFile.FileUploaded -> {
+                        result.value = "File uploaded"
+                    }
+                    GeminiAIGenerateWithFile.FilesUploadFailed -> {
+                        result.value = "Files uploading failed"
+                    }
+                    GeminiAIGenerateWithFile.FilesUploading -> {
+                        result.value = "Uploading files"
+                    }
+                    GeminiAIGenerateWithFile.Generating -> {
+                        result.value = "Generating content"
+                    }
+                    is GeminiAIGenerateWithFile.StreamContentError -> {
+                        result.value = it.message
+                    }
+                    is GeminiAIGenerateWithFile.StreamContentSuccess -> {
+                        if(initial == 0){
+                            result.value = ""
+                        }
+                        result.value += it.text
+                        initial +=1
+                    }
+                }
                 isModelStartedGeneratingText.value = false
             }
         }
@@ -167,14 +199,8 @@ getFileByName()
     }
 
     private fun getModelInputList(
-            fileUriItems : List<FileUriInfo>, text : String) : List<ModelInput> {
+            text : String) : List<ModelInput> {
         val modelInputList = mutableListOf<ModelInput>()
-        fileUriItems.forEach {
-            modelInputList.add(
-                ModelInput.File(
-                    true, fileName = it.name, mimeType = it.mimeType, data = it.data
-                        ?: ByteArray(0), uri = it.path))
-        }
         modelInputList.add(ModelInput.Text(true, text))
         return modelInputList
     }

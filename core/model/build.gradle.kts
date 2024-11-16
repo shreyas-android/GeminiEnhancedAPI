@@ -7,9 +7,21 @@ plugins {
     id("maven-publish")
 }
 
-group = "com.androidai.framework.shared.core.model"
-version = "1.0.0-alpha01"
+group = "com.androidai.shared.gemini.enhanced.model"
+version = "1.0.0-alpha02"
 
+publishing {
+    repositories {
+        maven {
+            url = uri("https://maven.pkg.github.com/shreyas-android/GeminiEnhancedAPI")
+            credentials {
+                /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
+                username = System.getenv("GPR_USER")
+                password = System.getenv("GPR_API_KEY")
+            }
+        }
+    }
+}
 
 kotlin {
 
@@ -20,7 +32,6 @@ kotlin {
             }
         }
         publishLibraryVariants("release")
-        /**/
     }
 
     listOf(
@@ -35,6 +46,7 @@ kotlin {
             dependencies { //put your multiplatform dependencies here
 
                implementation(libs.kotlin.coroutines.core)
+                implementation("dev.shreyaspatil.generativeai:generativeai-google:0.9.0-1.0.1")
                 api(project(":core:file"))
             }
 
@@ -46,7 +58,6 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation(libs.generative.ai)
             }
         }
 
