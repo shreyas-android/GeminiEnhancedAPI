@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.androidai.shared.gemini.enhanced.model"
-version = "1.0.0-alpha02"
+version = "1.0.0-alpha03"
 
 publishing {
     repositories {
