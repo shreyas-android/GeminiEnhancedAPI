@@ -73,5 +73,7 @@ dependencies {
     implementation(libs.lifecycle.extensions) // implementation(libs.lifeCycleExtension)
     implementation(libs.lifeCycleRuntime)
     implementation(libs.lifeCycleProcess)
-    implementation(project(":core:model"))
+    // implementation(project(":core:model"))
+
+    implementation("com.androidai.shared.gemini.enhanced.model:model-android:1.0.1")
 }

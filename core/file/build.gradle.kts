@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.androidai.shared.gemini.enhanced.file"
-version = "1.0.0-alpha03"
+version = "1.0.3"
 
 
 publishing {
