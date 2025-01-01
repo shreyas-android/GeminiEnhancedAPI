@@ -39,4 +39,8 @@ interface GeminiAIManager {
     suspend fun getFileByName(fileName : String) : RemoteResponse<GeminiFileResponse>
 
     suspend fun deleteFileByName(fileName : String) : RemoteResponse<Boolean>
+
+    suspend fun generateConversation(
+            modelInputHistory: List<ModelInput>, modelInput: ModelInput,
+            defaultErrorMessage:String): Flow<String?>
 }

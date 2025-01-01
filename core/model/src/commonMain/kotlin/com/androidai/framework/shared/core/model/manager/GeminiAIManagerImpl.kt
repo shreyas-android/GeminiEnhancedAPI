@@ -15,13 +15,17 @@ import com.androidai.framework.shared.core.model.data.model.toGeminiModelListInf
 import com.androidai.framework.shared.core.model.manager.file.GeminiAIFileManager
 import dev.shreyaspatil.ai.client.generativeai.GenerativeModel
 import dev.shreyaspatil.ai.client.generativeai.type.Content
+import dev.shreyaspatil.ai.client.generativeai.type.GenerateContentResponse
 import dev.shreyaspatil.ai.client.generativeai.type.content
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 internal class GeminiAIManagerImpl(
@@ -289,6 +293,115 @@ internal class GeminiAIManagerImpl(
 
     override suspend fun deleteFileByName(fileName : String) : RemoteResponse<Boolean> {
         return geminiAIFileManager.deleteFileByName(fileName)
+    }
+
+
+    override suspend fun generateConversation(
+            modelInputHistory: List<ModelInput>, modelInput: ModelInput,
+            defaultErrorMessage:String): Flow<String?> {
+        val model = generativeModel
+        val historyList = mutableListOf<Content>()
+
+        modelInputHistory.forEach {
+            when (it) {
+                is ModelInput.Image -> {
+                    val role = if (it.isUser){
+                        "user"
+                    }else{
+                        "model"
+                    }
+                    historyList.add(content(role) {
+                        image(it.bitmap)
+                    })
+
+                }
+
+                is ModelInput.Text -> {
+                    val role = if (it.isUser){
+                        "user"
+                    }else{
+                        "model"
+                    }
+                    historyList.add(content(role) {
+                        text(it.text)
+                    })
+                }
+
+                is ModelInput.Blob -> {
+
+                }
+                is ModelInput.File -> {
+
+                }
+            }
+        }
+
+        val prompt = when (modelInput) {
+            is ModelInput.Image -> {
+                val role = if (modelInput.isUser){
+                    "user"
+                }else{
+                    "model"
+                }
+                content(role) {
+                    image(modelInput.bitmap)
+                }
+            }
+
+            is ModelInput.Text -> {
+                val role = if (modelInput.isUser){
+                    "user"
+                }else{
+                    "model"
+                }
+                content(role) {
+                    text(modelInput.text)
+                }
+            }
+
+            is ModelInput.Blob -> {
+                val role = if (modelInput.isUser){
+                    "user"
+                }else{
+                    "model"
+                }
+                content(role) {
+                    blob(modelInput.mimeType, modelInput.data)
+                }
+            }
+            is ModelInput.File -> {
+                val role = if (modelInput.isUser){
+                    "user"
+                }else{
+                    "model"
+                }
+                content(role) {
+                    fileData(modelInput.uri, modelInput.mimeType)
+                }
+            }
+        }
+        val chat = model.startChat(historyList)
+        return runCatching {
+            chat.sendMessage(prompt)
+        }.fold(onSuccess = {
+            flow {
+                emit(it)
+            }.catch {
+                val generateContentResponse = GenerateContentResponse(listOf(), null, null)
+                emit(generateContentResponse)
+            }.map { generateContentResponse: GenerateContentResponse ->
+                val text = generateContentResponse.text
+                if (text.isNullOrEmpty()) {
+                    defaultErrorMessage
+                } else {
+                    text
+                }            }
+        }, onFailure = {
+            flow {
+                emit(it.message)
+            }
+        })
+
     }
 
 }
