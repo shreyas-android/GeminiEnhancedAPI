@@ -48,7 +48,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.4"
+        kotlinCompilerExtensionVersion = "1.5.4"
     }
     packaging {
         resources {
@@ -73,7 +73,8 @@ dependencies {
     implementation(libs.lifecycle.extensions) // implementation(libs.lifeCycleExtension)
     implementation(libs.lifeCycleRuntime)
     implementation(libs.lifeCycleProcess)
-    // implementation(project(":core:model"))
+     implementation(project(":core:model"))
+    implementation(project(":core:file"))
 
-    implementation("com.androidai.shared.gemini.enhanced.model:model-android:1.0.1")
+  //  implementation("com.androidai.shared.gemini.enhanced.model:model-android:1.0.1")
 }

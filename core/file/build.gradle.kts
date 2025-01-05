@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.androidai.shared.gemini.enhanced.file"
-version = "1.0.3"
+version = "1.0.6"
 
 
 publishing {
@@ -48,7 +48,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(libs.atomicfu)
                 implementation(libs.kotlin.coroutines.core)
                 implementation(libs.bundles.ktor.common)
             }

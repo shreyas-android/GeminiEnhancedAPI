@@ -11,7 +11,7 @@ composeConstraintLayout = "1.0.1"
 composeActivity = "1.8.0"
 composeNavigation = "2.8.0-beta06"
 
-kotlin = "1.8.10"
+kotlin = "1.9.20"
 kotlinCoroutines = "1.6.4"
 lifeCycleExtension = "2.2.0"
 
