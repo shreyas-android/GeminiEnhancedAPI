@@ -331,7 +331,14 @@ internal class GeminiAIManagerImpl(
 
                 }
                 is ModelInput.File -> {
-
+                    val role = if (it.isUser){
+                        "user"
+                    }else{
+                        "model"
+                    }
+                    historyList.add(content(role) {
+                        fileData(it.uri, it.mimeType)
+                    })
                 }
             }
         }

@@ -9,7 +9,7 @@ import com.androidai.framework.shared.core.model.data.enums.GeminiAIModel
 object GeminiAIAndroidCore {
 
     private var apiKey:String = ""
-    private var modelName:GeminiAIModel = GeminiAIModel.GEMINI_PRO
+    private var modelName:GeminiAIModel = GeminiAIModel.GEMINI_FLASH_2_0
     private var isDebug:Boolean = false
 
     private var geminiAIManagerImpl: GeminiAIManager? = null

@@ -15,7 +15,7 @@ kotlin = "1.9.20"
 kotlinCoroutines = "1.6.4"
 lifeCycleExtension = "2.2.0"
 
-agp = "8.1.1"
+agp = "8.3.2"
 kotlin1810 = "1.8.10"
 core-ktx = "1.9.0"
 junit = "4.13.2"
